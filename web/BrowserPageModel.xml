@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>File Browser</title>
+    
+    <script type="text/javascript" src="/resources/assets/js/jquery.min.js"></script>
+    
+    <link  href="/resources/assets/css/main.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/resources/assets/css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="/resources/assets/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="resources/assets/css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="resources/assets/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="resources/assets/css/main.css" type="text/css"/>
+    <link rel="stylesheet" href="resources/assets/css/main.css" type="text/css">
+
+
+
+
+
+
+</head>
+<body>
+   
+   
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!--<form style="padding:10px; width:100%; overflow:no-display; " action="~/search/" method="get">
+                    <div class="form-control" style="height:28px; max-width:300px; padding-top:2px;">
+                        <input style="max-width:85%;  width:85%; border:none" class="col-lg-3 col-md-3 col-sm-5 col-xs-5" type="text" name="search" id="searchroleName" placeholder="Search">
+                        <i style="float:right; margin-top:3px;  margin-left:5px;" class="glyphicon glyphicon-search"></i>
+                    </div>
+                </form>
+-->
+            <a href="./" class="navbar-brand">Secure File Browser</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <!--<li><a href="#"><span> <strong>Item 1</strong></span></a></li>
+                    <li><a href="#"><span> <strong>Item 2</strong></span></a></li>-->
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="container" class="container body-content" style="min-width:100%">
+        <h1>Files</h1>
+        <hr />
+       
+        <div class="input-group">
+         <span class="input-group-addon" id="basic-addon1">•••</span>
+         <input type="password" class="form-control" placeholder="Secret" aria-describedby="basic-addon1">
+        </div>
+        
+        <hr />
+        
+        <!--Todo o conteudo vai aqui-->
+        <div id="filelistContainer" class="filelist">
+            <!--FileList-->
+            
+            
+        </div>
+       
+        
+        <hr />
+        <footer>
+            <p>File Browser</p>
+        </footer>
+    </div>
+    <script>
+        
+         $('#filelistContainer').load("/browse", function (response, status, xhr) {
+            if (status == "error") {
+               
+                alert(msg + xhr.status + " " + xhr.statusText);
+            }else{
+                
+                $('#FileList').DataTable({
+
+                });
+                
+            }
+        });
+        
+        
+           
+         
+    </script>
+    
+</body>
+</html>
