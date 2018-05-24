@@ -156,7 +156,7 @@
             
             var request = new XMLHttpRequest();
     request.open('GET', 'download?file='+name, true);
-    request.responseType = 'blob';
+    request.responseType = 'text/plain';
 
     request.onload = function () {
         
@@ -171,14 +171,14 @@
                     // send over the internet or store in the local storage as shown here
                     //localStorage.setItem(USER_ID, ciphertext);
                     
-                var reader = new FileReader();
-                reader.onload = function (e) {
+                //var reader = new FileReader();
+                //reader.onload = function (e) {
                     
                 var password = document.getElementById('password').value;
                     
                 //var encrypted = CryptoJS.AES.encrypt(reader.result, password);
                 //var decrypted = CryptoJS.AES.decrypt(encrypted, password).toString(CryptoJS.enc.Utf8);
-                var decrypted = CryptoJS.AES.decrypt(reader.result, password).toString(CryptoJS.enc.Utf8);
+                var decrypted = CryptoJS.AES.decrypt(request.response, password).toString(CryptoJS.enc.Utf8);
                 var dataUrl = 'data:' + decrypted;//data:application/octet-stream,
                 //array1.push('href=data:data:application/octet-stream,' + decrypted);
 
@@ -194,7 +194,7 @@
                 // Cleanup the DOM
                 document.body.removeChild(link);
                 delete link;
-                };
+                //};
                 
                 
                 
@@ -203,7 +203,7 @@
                 
                 
                 
-                reader.readAsDataURL(request.response);
+                //reader.readAsDataURL(request.response);
                 
                     
                     
