@@ -60,13 +60,24 @@
     <div id="container" class="container body-content" style="min-width:100%">
         <h1>Files</h1>
         <hr />
+        
        
-        <!--<div class="input-group">
+        <div class="input-group">
          <span class="input-group-addon" id="basic-addon1">•••</span>
-         <input type="password" class="form-control" placeholder="Secret" aria-describedby="basic-addon1">
+         <input id="password" type="password" class="form-control" placeholder="Secret" aria-describedby="basic-addon1">
+        </div>
+        <h1>Upload</h1>
+        <div class="input-group">
+         <span class="input-group-addon" id="basic-addon1">•••</span>
+         <input id="file" name="file" type="file" class="form-control" placeholder="Secret" aria-describedby="basic-addon1">
+         
+         <form id="fileUploadForm" action="./upload" method="POST" >
+             <input id="uploadData" type="hidden" name="data"/>
+             <input id="uploadName" type="hidden" name="name"/>
+         </form>
         </div>
         
-        <hr />-->
+        <hr />
         
         <!--Todo o conteudo vai aqui-->
         <div id="filelistContainer" class="filelist">
@@ -82,6 +93,49 @@
         </footer>
     </div>
     <script>
+        
+        $("input[name='file']").change(function(e) { 
+            
+            var file = e.target.files[0];
+            
+             var reader = new FileReader();
+            reader.onload = function(e){
+
+                // Use the CryptoJS library and the AES cypher to encrypt the 
+                // contents of the file, held in e.target.result, with the password
+                var password = document.getElementById('password').value;
+                var encrypted = CryptoJS.AES.encrypt(e.target.result, password);
+                
+                document.getElementById('uploadName').value = file.name;
+                document.getElementById('uploadData').value = encrypted;
+                document.getElementById('fileUploadForm').submit(); 
+              
+                
+                
+                
+                //alert(encrypted);
+                
+                // The download attribute will cause the contents of the href
+                // attribute to be downloaded when clicked. The download attribute
+                // also holds the name of the file that is offered for download.
+
+                //a.attr('href', 'data:application/octet-stream,' + encrypted);
+                //a.attr('download', file.name + '.encrypted');
+
+            };
+
+            // This will encode the contents of the file into a data-uri.
+            // It will trigger the onload handler above, with the result
+
+            reader.readAsDataURL(file);
+            
+            
+            
+    
+    
+        });
+        
+        
         
          $('#filelistContainer').load("/browse", function (response, status, xhr) {
             if (status == "error") {
@@ -119,8 +173,12 @@
                     
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                var encrypted = CryptoJS.AES.encrypt(reader.result, '12345');
-                var decrypted = CryptoJS.AES.decrypt(encrypted, '12345').toString(CryptoJS.enc.Utf8);
+                    
+                var password = document.getElementById('password').value;
+                    
+                //var encrypted = CryptoJS.AES.encrypt(reader.result, password);
+                //var decrypted = CryptoJS.AES.decrypt(encrypted, password).toString(CryptoJS.enc.Utf8);
+                var decrypted = CryptoJS.AES.decrypt(reader.result, password).toString(CryptoJS.enc.Utf8);
                 var dataUrl = 'data:' + decrypted;//data:application/octet-stream,
                 //array1.push('href=data:data:application/octet-stream,' + decrypted);
 
