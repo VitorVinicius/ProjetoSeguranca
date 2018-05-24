@@ -95,24 +95,69 @@
                 
             }
         });
-        
-        function generate(file){
+        var array1 = new Array;
+        function generate(name){
             
-                
-                $.get( "download?file="+ file, function( data ) {
-                    alert( "Data Loaded: " + data );
+            
+            
+            var request = new XMLHttpRequest();
+    request.open('GET', 'download?file='+name, true);
+    request.responseType = 'blob';
+
+    request.onload = function () {
+        
+        
+        
+        // alert( "Data Loaded: " + request.response );
                     
                     // create the cipher text from the stringified JSON, using your secret key
-                    var ciphertext = CryptoJS.AES.encrypt(data, '12345678');
+                    //var ciphertext = CryptoJS.AES.encrypt(data, '12345678');
 
                     // now you can use the encrypted ciphertext.toString(), e.g.
                     // send over the internet or store in the local storage as shown here
                     //localStorage.setItem(USER_ID, ciphertext);
                     
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                var encrypted = CryptoJS.AES.encrypt(reader.result, '12345');
+                var decrypted = CryptoJS.AES.decrypt(encrypted, '12345').toString(CryptoJS.enc.Utf8);
+                var dataUrl = 'data:' + decrypted;//data:application/octet-stream,
+                //array1.push('href=data:data:application/octet-stream,' + decrypted);
+
+                var link = document.createElement("a");
+                link.download = name;
+                link.target = "_blank";
+
+                // Construct the uri
+                link.href = dataUrl;
+                document.body.appendChild(link);
+                link.click();
+
+                // Cleanup the DOM
+                document.body.removeChild(link);
+                delete link;
+                };
+                
+                
+                
+                //$('#thelist').append('FILES: ' + file.name + '<br>')
+                
+                
+                
+                
+                reader.readAsDataURL(request.response);
+                
                     
-                    var decrypted = CryptoJS.AES.decrypt(ciphertext, '12345678');
-                    alert( "Data decripted: " + decrypted.toString(CryptoJS.enc.Utf8));
-                  });
+                    
+                  
+        
+        
+        
+    }
+    request.send();
+            
+                
+              
     
             
         }
