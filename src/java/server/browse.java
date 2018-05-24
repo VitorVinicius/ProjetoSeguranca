@@ -58,7 +58,8 @@ public class browse extends HttpServlet {
             for (File file : listOfFiles) {
                 if (file.isFile()) {
                     out.println("  <tr>");
-                    out.println("    <td><a href=\"/download?file="+file.getName()+"\">"+file.getName()+"</a></td>");
+                    //out.println("    <td><a href=\"/download?file="+file.getName()+"\">"+file.getName()+"</a></td>");
+                    out.println("    <td><a onclick=\"generate('"+file.getName()+"')\">"+file.getName()+"</a></td>");
                     out.println("    <td>"+(file.length()/1000)+"KB</td> ");
                     out.println("  </tr>");
                     

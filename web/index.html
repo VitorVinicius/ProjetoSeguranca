@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="resources/assets/css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="resources/assets/css/main.css" type="text/css"/>
     <link rel="stylesheet" href="resources/assets/css/main.css" type="text/css">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
 
 
 
@@ -96,7 +96,26 @@
             }
         });
         
-        
+        function generate(file){
+            
+                
+                $.get( "download?file="+ file, function( data ) {
+                    alert( "Data Loaded: " + data );
+                    
+                    // create the cipher text from the stringified JSON, using your secret key
+                    var ciphertext = CryptoJS.AES.encrypt(data, '12345678');
+
+                    // now you can use the encrypted ciphertext.toString(), e.g.
+                    // send over the internet or store in the local storage as shown here
+                    //localStorage.setItem(USER_ID, ciphertext);
+                    
+                    
+                    var decrypted = CryptoJS.AES.decrypt(ciphertext, '12345678');
+                    alert( "Data decripted: " + decrypted.toString(CryptoJS.enc.Utf8));
+                  });
+    
+            
+        }
            
          
     </script>
